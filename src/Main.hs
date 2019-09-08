@@ -11,8 +11,8 @@ import           Hakyll
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyllWith config $ 
-    match "test/*" $ do
-        route $ setExtension "html"
+    match "index.html" $ do
+        route idRoute
         compile copyFileCompiler
 
 
