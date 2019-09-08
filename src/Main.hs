@@ -12,12 +12,6 @@ import           Hakyll.Web.Sass (sassCompiler)
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyllWith config $ do
---    match "index.html" $ do
---        route idRoute
---        compile copyFileCompilerscss
---    match "styles/main.scss" $ do
---        route   $ constRoute "style.css"
---        compile compressScssCompiler
 
     match "styles/main.scss" $ do
         route $ constRoute "styles/style.css"
@@ -36,22 +30,24 @@ main = hakyllWith config $ do
                 >>= loadAndApplyTemplate "templates/layouts/default.html" archiveCtx
                 >>= relativizeUrls
 
+    match "posts/*" $ do
+        route $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/pages/post.html"    postCtx
+            >>= loadAndApplyTemplate "templates/layouts/default.html" postCtx
+            >>= relativizeUrls
+    
     match "templates/**" $ compile templateCompiler
 
 
 --------------------------------------------------------------------------------
 config :: Configuration
 config = defaultConfiguration
-         { destinationDirectory = "docs" 
-         , providerDirectory    = "src"  }
+    { destinationDirectory = "docs" 
+    , providerDirectory    = "src"  }
 
-
--- compressScssCompiler :: Compiler (Item String)
--- compressScssCompiler = 
---   fmap (fmap compressCss) $
---     getResourceString
---     >>= withItemBody (unixFilter "sass" [ "-s"
---                                         , "--scss"
---                                         , "--style", "compressed"
---                                         , "--load-path", "styles"
---                                         ])
+postCtx :: Context String
+postCtx =
+    dateField "date" "%B %e, %Y" `mappend`
+    constField "post" "test"     `mappend`
+    defaultContext
