@@ -6,6 +6,7 @@ module Main (main) where
 --------------------------------------------------------------------------------
 import           Data.Monoid (mappend)
 import           Hakyll
+import           Hakyll.Web.Sass (sassCompiler)
 
 
 --------------------------------------------------------------------------------
@@ -13,7 +14,15 @@ main :: IO ()
 main = hakyllWith config $ do
 --    match "index.html" $ do
 --        route idRoute
---        compile copyFileCompiler
+--        compile copyFileCompilerscss
+--    match "styles/main.scss" $ do
+--        route   $ constRoute "style.css"
+--        compile compressScssCompiler
+
+    match "styles/main.scss" $ do
+        route $ constRoute "styles/style.css"
+        let compressCssItem = fmap compressCss
+        compile (compressCssItem <$> sassCompiler)
 
     create ["index.html"] $ do
         route idRoute
@@ -37,3 +46,12 @@ config = defaultConfiguration
          , providerDirectory    = "src"  }
 
 
+-- compressScssCompiler :: Compiler (Item String)
+-- compressScssCompiler = 
+--   fmap (fmap compressCss) $
+--     getResourceString
+--     >>= withItemBody (unixFilter "sass" [ "-s"
+--                                         , "--scss"
+--                                         , "--style", "compressed"
+--                                         , "--load-path", "styles"
+--                                         ])
