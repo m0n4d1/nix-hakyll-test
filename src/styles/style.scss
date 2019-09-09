@@ -1,0 +1,74 @@
+@import 'layout';
+@import 'color';
+@import 'typography';
+
+@import 'post';
+
+body { 
+  margin: 0; 
+  padding: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 200 200'%3E%3Cpolygon fill='%23DCEFFA' points='100 0 0 100 100 100 100 200 200 100 200 0'/%3E%3C/svg%3E");
+}
+
+
+header {
+  $color: get-color(primary);
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  @include set-color($color);
+  height: 100px;
+  z-index: 1001;
+  //border: 1px dotted red;
+}
+
+.topnav {
+  text-align: center;
+  $color: get-color(primary);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  @include set-color($color);
+  a {
+    padding: 1rem 0;
+    width: 100%;
+    transition: background-color .1s ease;
+    &:hover {
+      background-color: brightness($color,10);
+    }
+  }
+}
+.bottomnav{
+  
+}
+
+main {
+  display: grid;
+  article {
+    $color: get-color(tertiary);
+    padding: 0 1rem;
+    color: $color;
+  }
+}
+
+footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  $color: get-color(tint);
+  text-align: center;
+  @include set-color($color);
+}
+
+.subfooter {
+  $color: get-color(tertiary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include set-color($color);
+}

@@ -1,0 +1,22 @@
+$breakpoints: (
+  laptop: 1200px,
+  tablet: 900px,
+  mobile: 600px
+);
+
+@mixin constrain($breakpoint) {
+  padding-left: var(--constrain-#{$breakpoint});
+  padding-right: var(--constrain-#{$breakpoint});
+}
+
+:root {
+  @each $breakpoint, $size in $breakpoints {
+    --constrain-#{$breakpoint}: calc(50vw - #{$size / 2});
+  }
+}
+
+@each $breakpoint, $_ in $breakpoints {
+  .slat-#{$breakpoint} {
+    @include constrain($breakpoint);
+  }
+}

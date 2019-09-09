@@ -3,10 +3,24 @@
 <article>
   $body$
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="m0n4d1/nix-hakyll-test"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section id="commentArea">
+  <button onclick="loadComments(this);">Load Comments
+    <script>
+      function loadComments(e) {
+        var comments = document.createElement("script");
+        comments.setAttribute("src", "https://utteranc.es/client.js");
+        comments.setAttribute("repo", "m0n4d1/nix-hakyll-test");
+        comments.setAttribute("issue-term", "pathname");
+        comments.setAttribute("theme", "github-light");
+        comments.setAttribute("crossorigin", "anonymous");
+        comments.setAttribute("async", "");
+        var commentArea = document.querySelector("#commentArea");
+        commentArea.append(comments);
+        e.remove();
+      };
+    </script>
+  </button>
+</section>
+
+

@@ -4,7 +4,8 @@ module Main (main) where
 
 
 --------------------------------------------------------------------------------
-import           Data.Monoid (mappend)
+--import           Data.Monoid (mappend)
+import           Data.Monoid     ((<>))
 import           Hakyll
 import           Hakyll.Web.Sass (sassCompiler)
 
@@ -13,16 +14,18 @@ import           Hakyll.Web.Sass (sassCompiler)
 main :: IO ()
 main = hakyllWith config $ do
 
-    match "styles/main.scss" $ do
-        route $ constRoute "styles/style.css"
+    match "styles/style.scss" $ do
+        route $ setExtension "css"
         let compressCssItem = fmap compressCss
         compile (compressCssItem <$> sassCompiler)
 
     create ["index.html"] $ do
         route idRoute
         compile $ do
+            posts <- recentFirst =<< loadAll "posts/*"
             let archiveCtx =
-                    constField "title" "Home"            `mappend`
+                    listField "posts" postCtx (return posts) <>
+                    constField "title" "Home"                <>
                     defaultContext
 
             makeItem ""
@@ -37,7 +40,7 @@ main = hakyllWith config $ do
             >>= loadAndApplyTemplate "templates/layouts/default.html" postCtx
             >>= relativizeUrls
     
-    match "templates/**" $ compile templateCompiler
+    match "templates/**" $ compile templateCompiler 
 
 
 --------------------------------------------------------------------------------
@@ -48,6 +51,9 @@ config = defaultConfiguration
 
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
-    constField "post" "test"     `mappend`
+    dateField "date" "%B %e, %Y" <>
     defaultContext
+
+templateCtx :: Context String
+templateCtx =
+    constField "root" "localhost:8000/"
