@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document - example post</title>
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Audiowide|Aldrich|Grupo|Bungee|Source+Sans+Pro&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
@@ -15,10 +16,13 @@
 <nav class="slat-mobile topnav">
     <a href="../index.html">home</a>
 </nav>
-  <main class="slat-tablet">
-    <h1>Post title: example post</h1>
-<p>posted on: September  9, 2019</p>
-<article>
+  <main>
+    <section id="title-area" class="slat-laptop">
+  <h1>Post title: example post</h1>
+  <p>posted on: September  9, 2019</p>
+</section>
+
+<article class="slat-laptop">
   <h2 id="first-section">First Section</h2>
 <p>Mauris in lorem nisl. Maecenas tempus facilisis ante, eget viverra nisl tincidunt et. Donec turpis lectus, mattis ac malesuada a, accumsan eu libero. Morbi condimentum, tortor et tincidunt ullamcorper, sem quam pretium nulla, id convallis lectus libero nec turpis. Proin dapibus nisi id est sodales nec ultrices tortor pellentesque.</p>
 <h2 id="second-section">Second Section</h2>
@@ -28,7 +32,7 @@
 )</code></pre>
 </article>
 
-<section id="commentArea">
+<section id="commentArea" class="slat-tablet">
   <button onclick="loadComments(this);">Load Comments
     <script>
       function loadComments(e) {
@@ -53,5 +57,8 @@
   <footer>
   <p>this is the footer</p>
 </footer>
+<div class="subfooter">
+  <h6>Copyright &copy 2019</h6>
+</div>
 </body>
 </html>
